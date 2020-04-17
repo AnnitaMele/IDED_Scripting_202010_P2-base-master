@@ -59,7 +59,9 @@ public class SpawnController : MonoBehaviour
             spawnPoint = Camera.main.ViewportToWorldPoint(new Vector3(
                 Random.Range(0F, 1F), 1F, transform.position.z));
 
-            GameObject instance = Instantiate(spawnGO, spawnPoint, Quaternion.identity);
+            GameObject instance = InterPooling.instance.RequestTT(spawnGO);
+            instance.transform.position = spawnPoint;
+            instance.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 

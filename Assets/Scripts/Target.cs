@@ -16,7 +16,7 @@ public class Target : MonoBehaviour
     private void Start()
     {
         currentHP = maxHP;
-        Destroy(gameObject, TIME_TO_DESTROY);
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -24,7 +24,7 @@ public class Target : MonoBehaviour
         int collidedObjectLayer = collision.gameObject.layer;
         if (collidedObjectLayer.Equals(Utils.BulletLayer))
         {
-            //Destroy(collision.gameObject);
+            InterPooling.instance.ReturnPool(collision.gameObject);
 
             TargetDamage();
 
@@ -41,6 +41,7 @@ public class Target : MonoBehaviour
             collidedObjectLayer.Equals(Utils.KillVolumeLayer))
         {
             Player.instance.DamagePlayer();
+            InterPooling.instance.ReturnPool(gameObject);
 
         }
 
@@ -52,7 +53,7 @@ public class Target : MonoBehaviour
         if (currentHP <= 0)
         {
             Player.instance.ScoreP(scoreAdd);
-
+            InterPooling.instance.ReturnPool(gameObject);
         }
 
     }

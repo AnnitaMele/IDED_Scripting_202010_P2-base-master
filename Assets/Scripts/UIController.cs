@@ -42,7 +42,10 @@ public class UIController : MonoBehaviour
    
     public void Death()
     {
-
+        if (!scoreLabel) return;
+        ToggleRestartButton(true);
+        scoreLabel.text = "Game Over";
+    
     }
 
     public void PlayerLivesCount(int updateLives)

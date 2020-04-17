@@ -89,6 +89,9 @@ public class Player : MonoBehaviour, I_Damageable
             1F, 0F, 0F)).x - PLAYER_RADIUS;
 
         Lives = PLAYER_LIVES;
+        OnPlayerHit?.Invoke(Lives);
+        OnPlayerScoreC?.Invoke(Score);
+        
 
         
 
@@ -131,9 +134,14 @@ public class Player : MonoBehaviour, I_Damageable
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 && CanShoot)
         {
-            Instantiate<Rigidbody>
+            /*Instantiate<Rigidbody>
                (bullet, bulletSpawnPoint.position, bulletSpawnPoint.rotation)
                .AddForce(transform.up * bulletSpeed, ForceMode.Impulse);
+               */
+            GameObject Thing = InterPooling.instance.RequestTT(bullet.gameObject);
+            Thing.transform.position = bulletSpawnPoint.position;
+            Thing.transform.rotation = bulletSpawnPoint.rotation;
+            Thing.GetComponent<Rigidbody>().velocity = transform.up * bulletSpeed;
         }
     }
 
